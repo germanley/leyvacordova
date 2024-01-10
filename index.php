@@ -16,33 +16,36 @@
     <table class="table table-striped table-responsive">
       <thead>
         <tr>
-          <th>Nombre</th>
+        <th>Nombre</th>
           <th>Apellido</th>
           <th>Direccion</th>
           <th>Telefono Fijo</th>
           <th>Telefono Movil</th>
           <th>Correo Electronico</th>
-          
+          <th>Distrito</th>
         </tr>
       </thead>
       <tbody>
-        <?php
-
+      <?php
         $conexion = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), "BASEDATOS");
 
-        $cadenaSQL = "select * from agenda";
+        $cadenaSQL = "SELECT a.nombre, a.apellido, a.direccion, a.telefijo, a.telefmovi, a.email, d.distrito_nombre
+                      FROM agenda a
+                      INNER JOIN distrito d ON a.id_distrito = d.id";
+
         $resultado = mysqli_query($conexion, $cadenaSQL);
 
         while ($fila = mysqli_fetch_object($resultado)) {
-         echo "<tr><td> " .$fila->nombre . 
-         "</td><td>" . $fila->apellido .
-         "</td><td>" . $fila->direccion .
-         "</td><td>" . $fila->telefijo .
-         "</td><td>" . $fila->telemovil .
-         "</td><td>" . $fila->email .
-         "</td></tr>";
-       }
-       ?>
+          echo "<tr><td>" . $fila->nombre . 
+          "</td><td>" . $fila->apellido .
+          "</td><td>" . $fila->direccion .
+          "</td><td>" . $fila->telefijo .
+          "</td><td>" . $fila->telefmovi .
+          "</td><td>" . $fila->email .
+          "</td><td>" . $fila->distrito_nombre .
+          "</td></tr>";
+        }
+        ?>
      </tbody>
    </table>
  </div>
